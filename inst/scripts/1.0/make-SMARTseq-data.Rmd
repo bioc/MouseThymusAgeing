@@ -1,0 +1,136 @@
+---
+title: "Preparing mouse ageing thymus SMART-seq data for ExperimentHub"
+output:
+  BiocStyle::html_document:
+    toc_float: true
+---
+
+```{r style, echo=FALSE, results='hide', message=FALSE}
+library(BiocStyle)
+knitr::opts_chunk$set(error=FALSE, message=FALSE, warning=FALSE)
+```
+
+# Overview
+
+The purpose of this notebook is to prepare the mouse thymus ageing single-cell transcriptome data generated using the plate-based 
+SMART-seq2 chemistry. Specific thymic epithelial cell (TEC) subpopulations (mTEClo, mTEChi, cTEC & Dsg3+ mTEC) were flourescence-activated cell 
+sorted (FACS) into 384-well plates containing lysis buffer, and frozen down before processing using the SMART-seq2 chemistry. Single-cells 
+were sampled from mice of 5 different ages: 1, 4, 16, 32 and 52 weeks old. In addition, to minimise potential batch effect confounding, ages 
+were mixed on plates such that each plate contained cells from 3 ages. The exact locations were different between plates to remove the 
+potential for plate-spatial effects to also confound analyses downstream. Finally, the sorting took place over 5 days, with cells derived 
+from separate mice on each day, leading to 5 replicate mice for each combination of time point and TEC subpopulation.
+
+# Preparing the processed data
+
+To minimise processing and maximise usability, we have provided a single gzip compressed counts matrix after removal of poor-quality cells. 
+Borrowing from the `r Biocpkg("MouseGastrulationAtlas")` we also make using of caching in the `r Biocpkg("BiocFileCache")` to avoid having to 
+constantly download data for subsequent analyses.
+
+```{r}
+library(BiocFileCache)
+bfc <- BiocFileCache(ask=FALSE)
+count.path <- bfcrpath(bfc, file.path("https://content.cruk.cam.ac.uk/",
+                                      "jmlab/thymus_data/QC_counts.tsv.gz"))
+```
+
+These contain the gene counts for cells that pass QC (detailed in manuscript); I have not removed the genes with all zero counts across these 
+cells. For these data to be useable we also need the gene IDs - these are provided as a separate table that contains additional information 
+such as the chromosome, start and end position and gene length.
+
+```{r}
+genes.path <- bfcrpath(bfc, file.path("https://content.cruk.cam.ac.uk/",
+    "jmlab/thymus_data/Gene_info.tsv"))
+```
+
+Both of these data can be loaded in using the standard `read.table` functions.
+
+```{r}
+thymus.counts <- read.table(count.path, sep="\t", header=TRUE, stringsAsFactors=FALSE)
+gene.info <- read.table(genes.path, sep="\t", header=TRUE, stringsAsFactors=FALSE)
+```
+
+Finally, we can download the size factors and other cell-wise meta-data, including sorting day (replicate), sort population, age, cluster 
+ID as assigned in the manuscript and plate information. We can also pull in the reduced dimensional representations at this stage.
+
+```{r}
+# meta data
+meta.path <- bfcrpath(bfc, file.path("https://content.cruk.cam.ac.uk/",
+                                     "jmlab/thymus_data/meta_data.tsv.gz"))
+meta.data <- read.table(meta.path, sep="\t", header=TRUE, stringsAsFactors=FALSE)
+rownames(meta.data) <- meta.data$CellID
+meta.data <- meta.data[colnames(thymus.counts), ]
+head(meta.data)
+```
+
+
+```{r}
+# pca
+reds.path <- bfcrpath(bfc, file.path("https://content.cruk.cam.ac.uk/",
+                                     "jmlab/thymus_data/reduced_dims.tsv.gz"))
+pca.dims <- read.table(reds.path, sep="\t", header=TRUE, stringsAsFactors=FALSE)
+rownames(pca.dims) <- pca.dims$CellID
+pca.dims <- pca.dims[colnames(thymus.counts), ]
+head(pca.dims)
+```
+
+
+```{r}
+# size factors
+sf.path <- bfcrpath(bfc, file.path("https://content.cruk.cam.ac.uk/",
+                                     "jmlab/thymus_data/size_factors.tsv.gz"))
+size.factors <- read.table(sf.path, sep="\t", header=TRUE, stringsAsFactors=FALSE)
+rownames(size.factors) <- size.factors$CellID
+size.factors <- size.factors[colnames(thymus.counts), ]
+head(size.factors)
+```
+
+We will now put all of these together into a convenient `SingleCellExperiment` object.
+
+```{r}
+library(SingleCellExperiment)
+thymus.sce <- SingleCellExperiment(assays=list(counts=thymus.counts),
+                                   colData=meta.data, rowData=gene.info)
+
+# add the size factors
+sizeFactors(thymus.sce) <- size.factors$SizeFactor
+
+reducedDim(thymus.sce, "PCA") <- as.matrix(pca.dims[, paste0("PC", 1:50)])
+thymus.sce
+```
+
+We are now in the position to save all of these data. We'll do this by breaking up the `SingleCellExperiment` object into smaller, sorting 
+day-wise objects. as this will help to increase the speed of downloading. These smaller files are what get uploaded to 
+`r Biocpkg("ExperimentHub")`.
+
+
+```{r}
+base <- file.path("MouseThymusAgeing", "SMARTseq", "1.0.0")
+dir.create(base, recursive=TRUE, showWarnings=FALSE)
+saveRDS(rowData(thymus.sce), file=paste0(base, "/rowdata.rds"))
+for(day in unique(thymus.sce$SortDay)){
+    sub <- thymus.sce[, thymus.sce$SortDay == day]
+    saveRDS(counts(sub), 
+        file=paste0(base, "/counts-processed-day", day, ".rds"))
+    saveRDS(colData(sub), 
+        file=paste0(base, "/coldata-day", day, ".rds"))
+    saveRDS(sizeFactors(sub), 
+        file=paste0(base, "/sizefac-day", day, ".rds"))
+    saveRDS(reducedDims(sub), 
+        file=paste0(base, "/reduced-dims-day", day, ".rds"))
+}
+```
+
+
+# Session information
+
+```{r}
+sessionInfo()
+```
+
+
+
+
+
+
+
+
