@@ -17,11 +17,11 @@ info <- data.frame(
     ),
     RDataPath = c(
         file.path("MouseThymusAgeing", "Droplet", "1.0.0",
-                  c(sprintf("droplet_counts-processed-%s.rds", samp.names),
+                  c(sprintf("counts-processed-%s.rds", samp.names),
                     "rowdata.rds",
-                    sprintf("droplet_coldata-%s.rds", samp.names),
-                    sprintf("droplet_sizefactors-%s.rds", samp.names),
-                    sprintf("droplet_reduced-dims-%s.rds", samp.names))
+                    sprintf("coldata-%s.rds", samp.names),
+                    sprintf("sizefac-%s.rds", samp.names),
+                    sprintf("reduced-dims-%s.rds", samp.names))
         )),
     BiocVersion="3.12",
     Genome="mm10",

@@ -28,7 +28,7 @@ constantly download data for subsequent analyses.
 
 ```{r}
 library(BiocFileCache)
-bfc <- BiocFileCache(ask=FALSE)
+bfc <- BiocFileCache("SMARTseq_raw", ask=FALSE)
 count.path <- bfcrpath(bfc, file.path("https://content.cruk.cam.ac.uk/",
                                       "jmlab/thymus_data/QC_counts.tsv.gz"))
 ```
