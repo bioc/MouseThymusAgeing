@@ -34,7 +34,7 @@ count.path <- bfcrpath(bfc, file.path("https://content.cruk.cam.ac.uk/",
 ```
 
 These contain the gene counts for cells that pass QC (detailed in manuscript); I have not removed the genes with all zero counts across these 
-cells. For these data to be useable we also need the gene IDs - these are provided as a separate table that contains additional information 
+cells. For these data to be usable we also need the gene IDs - these are provided as a separate table that contains additional information 
 such as the chromosome, start and end position and gene length.
 
 ```{r}
