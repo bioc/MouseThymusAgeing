@@ -1,12 +1,28 @@
 Package: MouseThymusAgeing
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Single-cell Transcriptomics Data of the Ageing Mouse Thymus
+Version: 1.0.0
+Authors@R: c(
+    person("Mike", "Morgan", email="michael.morgan@cruk.cam.ac.uk", role=c("aut", "cre")),
+    person("Jeanette", "Baran-Gale", email="Jeanette.Baran-Gale@igmm.ed.ac.uk", role="aut"))
+Description: 
+    Data access to raw and processed coutns matrices for single-cell RNA sequencing data of 
+    thymic epithlial cells across mouse ageing
+License: GPL-3
 Encoding: UTF-8
+biocViews: ExperimentHub, SingleCell, FunctionalGenomics
 LazyData: true
-Import: ExperimentHub
+Depends:
+    R (>=4.0),
+    SingleCellExperiment,
+    SummarizedExperiment
+Imports:
+    ExperimentHub,
+    methods,
+    BiocGenerics,
+    S4Vectors
+VignetteBuilder:
+    knitr
+NeedsCompilation: no
+BugReports: https://github.com/MarioniLab/MouseThymusAgeing/issues
+
