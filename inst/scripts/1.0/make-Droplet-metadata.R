@@ -23,7 +23,7 @@ info <- data.frame(
                     sprintf("sizefac-%s.rds", samp.names),
                     sprintf("reduced-dims-%s.rds", samp.names))
         )),
-    BiocVersion="3.12",
+    BiocVersion="3.13",
     Genome="mm10",
     SourceType="TXT",
     SourceUrl=c(

@@ -21,7 +21,7 @@ info <- data.frame(
                     sprintf("sizefactors-day%i.rds", c(1:5)),
                     sprintf("reduced-dims-day%i.rds", c(1:5)))
     )),
-    BiocVersion="3.12",
+    BiocVersion="3.13",
     Genome="mm10",
     SourceType="TXT",
     SourceUrl=c(
