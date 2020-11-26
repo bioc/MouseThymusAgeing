@@ -1,9 +1,9 @@
-#' Mouse ageing thymus droplet single-cell RNA-sequencing data
+#' Mouse ageing thymus SMART-seq2 single-cell RNA-sequencing data
 #'
-#' Obtain the processed counts for the mouse ageing thymus droplet scRNA-seq data set.
+#' Obtain the processed counts for the mouse ageing thymus SMART-seq2 scRNA-seq data set.
 #'
-#' @param samples Integer or character vector specifying the samples for which data (processed or raw) should be obtained.
-#' If \code{NULL} (default), data are returned for all (36) samples.
+#' @param samples Integer or character vector specifying the samples for which data should be obtained.
+#' If \code{NULL} (default), data are returned for all (5) samples.
 
 #' @return
 #' A \linkS4class{SingleCellExperiment} is returned containing processed data from selected samples.
@@ -14,26 +14,28 @@
 #' This function downloads the data for the mouse ageing thymus droplet scRNA-seq
 #' data from Baran-Gale et al. (2020).
 #'
-#' The dataset contains 6 10X Genomics samples. The available samples are:
-#' \code{ZsG_1Run1, ZsG_1Run2, ZsG_2Run1, ZsG_2Run2, ZsG_3Run1, ZsG_3Run2}.
+#' The dataset contains 5 different SMART-seq2 samples, split by the day of acquisition. The available samples are:
+#' \code{1, 2, 3, 4, 5}.
 #'
+#' In the data, poor-quality cells have already been removed based on insufficient sequencing depth, high mitochondrial
+#' content, excessive proportion of expression from ERCC spike-in and ribosomal genes. Exact details can be found in the
+#' methods section of Baran-Gale et al. (2020).
 #'
-#' In the data, cell-containing libraries have already been identified in each sample
-#' using the \code{emptyDrops} function from \pkg{DropletUtils}.
-#' The count matrix contains the raw count vectors for the cells called from all samples in this manner.
+#' The count matrix contains the raw count vectors for the cells that pass QC.
 #' Size factors were computed using the \code{computeSumFactors} function from \pkg{scran}.
 #' The column metadata for called cells contains:
 #' \describe{
-#' \item{\code{Cell}:}{Character, unique cell identifier across all samples.}
-#' \item{\code{SampID}:}{Character, Short unique identified for the experimental sample.}
-#' \item{\code{CellOrigin}:}{Character, experimental sample identifier}
-#' \item{\code{SumFactor}:}{Numeric, Estimated normalized factor across all cells and experimental samples.}
-#' \item{\code{Class}:}{Character, Either Singlet or Multiplet Identifies cells called as a multiplet from hash-tag demultiplexing.}
-#' \item{\code{HTO}:}{Character, Hashtag oligo (HTO) character identifier, used for multiplexing experimental samples.}
+#' \item{\code{CellID}:}{Character, unique cell identifier across all samples.}
+#' \item{\code{ClusterID}:}{Numeric, The cluster to which cells were assigned based on community detection on a shared-NN grpah.}
+#' \item{\code{Position}:}{Character, Plate position of the index-sorted cell (384 well plate format).}
+#' \item{\code{PlateID}:}{Character, A unique ID for the 384-well plate into which each cell was index-sorted.}
+#' \item{\code{Column}:}{Integer, A value from 1-24 corresponding to the plate column.}
+#' \item{\code{Row}:}{Character, A value from A-P corresponding to the plate row.}
 #' \item{\code{Age}:}{Character, Age of mouse at the time of doxycycline treatment. Age at time of data acquisition is +4weeks.}
-#' \item{\code{SortType}:}{Character, Flow cytometry sorting group, either ZsGreen+ (ZsGp) or ZsGreen- (ZsGn).}
-#' \item{\code{Cluster}:}{Integer, Cluster to which cells were assigned based on using the Walktrap community detection algorithm on a k-NN graph.}
-#' \item{\code{ClusterAnnot}:}{Character, Annotation assigned to cluster.}
+#' \item{\code{SortType}:}{Character, Flow cytometry sorting group, mTEClo, mTEChi, gmTEC or cTEC.}
+#' \item{\code{SortDay}:}{Integer, Day on which cells were sorted - corresponds to the sample IDs for downloading data and replicate.}
+#' \item{\code{Age}:}{Character, Mouse age at the time of data acquisition.}
+#' \item{\code{SubType}:}{Character, Annotation assigned to clusters.}
 #' }
 #' Reduced dimension representations of the data are also available in the \code{reducedDims} slot of the SingleCellExperiment object.
 #' The \code{SingleCellExperiment} object has row metadata that contains the Ensembl ID \code{ensembl_gene_id} and Gene
@@ -41,7 +43,7 @@
 #'
 #' @author Mike Morgan, based on originals by Aaron Lun & Jonathan Griffiths
 #' @examples
-#' drop.data <- MouseSMARTseqData(samples = "ZsG_1Run1")
+#' drop.data <- MouseSMARTseqData(samples = "day1")
 #'
 #'
 #' @references
@@ -57,10 +59,13 @@
 #' @importFrom methods as
 MouseSMARTseqData <- function(samples=NULL){
     samp.names <- paste0("day", c(1:5))
+    if(is.null(samples)){
+        samples <- samp.names
+    }
 
     versions <- list(base="1.0.0")
 
-    if(any(!samples %in% samp.names)){
+    if(!is.null(samples) & any(!samples %in% samp.names)){
         warning(paste0("Incorrect samples found. Should be in list:", paste(samp.names, collapse=",")))
     }
 

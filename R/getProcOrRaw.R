@@ -21,7 +21,6 @@
     EXTRACTOR <- function(target, version_name) {
         ver <- .fetch_version(version, version_name)
         lapply(samples, function(i){
-            print(file.path(host, ver, sprintf("%s-%s.rds", target, i)))
             hub[hub$rdatapath==file.path(host, ver, sprintf("%s-%s.rds", target, i))][[1]]
         })
     }
@@ -30,7 +29,11 @@
     assays <- list(counts=do.call(cbind, count_list))
 
     coldata_list <- EXTRACTOR("coldata", "colData")
-    sf_list <- EXTRACTOR("sizefac", "sizefactors")
+    if(dataset %in% c("SMARTseq")){
+        sf_list <- EXTRACTOR("sizefactors", "sizefactors")
+    } else{
+        sf_list <- EXTRACTOR("sizefac", "sizefactors")
+    }
     reducedDims_list <- EXTRACTOR("reduced-dims", "reducedDims")
 
     # Handle data with multiple reducedDims

@@ -2,8 +2,8 @@
 #'
 #' Obtain the processed counts for the mouse ageing thymus droplet scRNA-seq data set.
 #'
-#' @param samples Integer or character vector specifying the samples for which data (processed or raw) should be obtained.
-#' If \code{NULL} (default), data are returned for all (36) samples.
+#' @param samples Integer or character vector specifying the samples for which data should be obtained.
+#' If \code{NULL} (default), data are returned for all (6) samples.
 
 #' @return
 #' A \linkS4class{SingleCellExperiment} is returned containing processed data from selected samples.
@@ -24,16 +24,15 @@
 #' Size factors were computed using the \code{computeSumFactors} function from \pkg{scran}.
 #' The column metadata for called cells contains:
 #' \describe{
-#' \item{\code{Cell}:}{Character, unique cell identifier across all samples.}
+#' \item{\code{CellID}:}{Character, unique cell identifier across all samples.}
 #' \item{\code{SampID}:}{Character, Short unique identified for the experimental sample.}
-#' \item{\code{CellOrigin}:}{Character, experimental sample identifier}
-#' \item{\code{SumFactor}:}{Numeric, Estimated normalized factor across all cells and experimental samples.}
 #' \item{\code{Class}:}{Character, Either Singlet or Multiplet Identifies cells called as a multiplet from hash-tag demultiplexing.}
 #' \item{\code{HTO}:}{Character, Hashtag oligo (HTO) character identifier, used for multiplexing experimental samples.}
 #' \item{\code{Age}:}{Character, Age of mouse at the time of doxycycline treatment. Age at time of data acquisition is +4weeks.}
 #' \item{\code{SortType}:}{Character, Flow cytometry sorting group, either ZsGreen+ (ZsGp) or ZsGreen- (ZsGn).}
 #' \item{\code{Cluster}:}{Integer, Cluster to which cells were assigned based on using the Walktrap community detection algorithm on a k-NN graph.}
 #' \item{\code{ClusterAnnot}:}{Character, Annotation assigned to cluster.}
+#' \item{\code{SizeFactor}:}{Numeric, Estimated normalized factor across all cells and experimental samples.}
 #' }
 #' Reduced dimension representations of the data are also available in the \code{reducedDims} slot of the SingleCellExperiment object.
 #' The \code{SingleCellExperiment} object has row metadata that contains the Ensembl ID \code{ensembl_gene_id} and Gene
@@ -57,6 +56,9 @@
 #' @importFrom methods as
 MouseDropletData <- function(samples=NULL){
     samp.names <- c("ZsG_1Run1", "ZsG_1Run2", "ZsG_2Run1", "ZsG_2Run2", "ZsG_3Run1", "ZsG_3Run2")
+    if(is.null(samples)){
+        samples <- samp.names
+    }
 
     versions <- list(base="1.0.0")
 
