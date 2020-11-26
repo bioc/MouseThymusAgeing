@@ -98,7 +98,34 @@ rownames(meta.data) <- meta.data$Sample
 
 # harmonise the sample names
 meta.data$SampID <- gsub(meta.data$CellOrigin, pattern="(st)|(nd)(rd)", replacement="")
-meta.data <- meta.data[intersect(colnames(thymus.counts), meta.data$Sample), ]
+meta.data <- meta.data[intersect(colnames(thymus.counts), meta.data$Sample), c("Sample", "CellOrigin", "Class",
+                                                                               "HTO", "Age", "SortType", "Cluster")]
+colnames(meta.data) <- c("CellID", "SampID", "Class", "HTO", "Age", "SortType", "Cluster")
+meta.data$ClusterAnnot <- NA
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(1)] <- "mTEC.1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(3)] <- "mTEC.2"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(14)] <- "mTEC.3"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(6)] <- "mTEC.4"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(20)] <- "mTEC.5"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(22)] <- "mTEC.6"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(16)] <- "mTEC.7"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(4)] <- "Intertypical.TEC.1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(7)] <- "Intertypical.TEC.2"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(10)] <- "Intertypical.TEC.3"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(11)] <- "Intertypical.TEC.4"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(9)] <- "cTEC.1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(13)] <- "cTEC.2"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(17)] <- "PostAire.mTEC.1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(19)] <- "PostAire.mTEC.2"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(23)] <- "eTEC1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(24)] <- "Prolif.TEC.1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(12)] <- "Prolif.TEC.2"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(2)] <- "Prolif.TEC.3"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(15)] <- "Tuft.mTEC.1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(18)] <- "Tuft.mTEC.2"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(5)] <- "Sca1.TEC.1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(8)] <- "New.TEC.1"
+meta.data$ClusterAnnot[meta.data$Cluster %in% c(21)] <- "New.TEC.2"
 head(meta.data)
 ```
 
