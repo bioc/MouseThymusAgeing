@@ -23,48 +23,30 @@
 #' Size factors were computed using the \code{computeSumFactors} function from \pkg{scran}.
 #' The column metadata for called cells contains:
 #' \describe{
-#' \item{\code{cell}:}{Character, unique cell identifier across all samples.}
-#' \item{\code{barcode}:}{Character, cell barcode from the 10X Genomics experiment.}
-#' \item{\code{sample}:}{Integer, index of the sample from which the cell was taken.}
-#' \item{\code{pool}:}{Integer, index of the embryo pool from which the sample derived. Samples with the same value are technical, not biological, replicates}
-#' \item{\code{stage}:}{Character, stage of the mouse embryo at which the sample was taken.}
-#' \item{\code{sequencing.batch}:}{Integer, sequencing run in which sample was multiplexed.}
-#' \item{\code{theiler}:}{Character, Theiler stage from which the sample was taken; alternative scheme to \code{stage}.}
-#' \item{\code{doub.density}:}{Numeric, output of (a now-outdated run of) \code{scran::doubletCells}, performed on each sample separately.}
-#' \item{\code{doublet}:}{Logical, whether a cell was called as a doublet.}
-#' \item{\code{cluster}:}{Integer, top-level cluster to which cell was assigned across all samples.}
-#' \item{\code{cluster.sub}:}{Integer, cluster to which cell was assigned when clustered within each \code{cluster}.}
-#' \item{\code{cluster.stage}:}{Integer, top-level cluster to which cell was assigned within individual timepoints.}
-#' \item{\code{cluster.theiler}:}{Integer, top-level cluster to which cell was assigned within individual Theiler stages.}
-#' \item{\code{stripped}:}{Logical, whether a cell was called as a cytoplasm-stripped nucleus.}
-#' \item{\code{celltype}:}{Character, cell type to which the cell was assigned.}
-#' \item{\code{colour}:}{Integer, cell type colour (hex) as in Pijuan-Sala et al. (2019).}
-#' \item{\code{umapX}:}{Numeric, x-coordinate of UMAP plot in Pijuan-Sala et al. (2019).}
-#' \item{\code{umapY}:}{Numeric, y-coordinate of UMAP plot in Pijuan-Sala et al. (2019).}
+#' \item{\code{Cell}:}{Character, unique cell identifier across all samples.}
+#' \item{\code{SampID}:}{Character, Short unique identified for the experimental sample.}
+#' \item{\code{CellOrigin}:}{Character, experimental sample identifier}
+#' \item{\code{SumFactor}:}{Numeric, Estimated normalized factor across all cells and experimental samples.}
+#' \item{\code{Class}:}{Character, Either Singlet or Multiplet Identifies cells called as a multiplet from hash-tag demultiplexing.}
+#' \item{\code{HTO}:}{Character, Hashtag oligo (HTO) character identifier, used for multiplexing experimental samples.}
+#' \item{\code{Age}:}{Character, Age of mouse at the time of doxycycline treatment. Age at time of data acquisition is +4weeks.}
+#' \item{\code{SortType}:}{Character, Flow cytometry sorting group, either ZsGreen+ (ZsGp) or ZsGreen- (ZsGn).}
+#' \item{\code{Cluster}:}{Integer, Cluster to which cells were assigned based on using the Walktrap community detection algorithm on a k-NN graph.}
+#' \item{\code{ClusterAnnot}:}{Character, Annotation assigned to cluster.}
 #' }
 #' Reduced dimension representations of the data are also available in the \code{reducedDims} slot of the SingleCellExperiment object.
-#' If spliced counts were requested, these will be in the assays slot of the SingleCellExperiment object.
-#' Spliced count matrices were collated using \emph{velocyto} version 0.17.17.
-#' Spliced count matrices will not have had swapped molecules removed, as \emph{velocyto} and \code{DropletUtils::swappedDrops} are not compatible.
-#' However, these should still be effective for calculating RNA velocity estimates using various different tools.
+#' The \code{SingleCellExperiment} object has row metadata that contains the Ensembl ID \code{ensembl_gene_id} and Gene
+#' symbols \code{external_gene_name} for each gene, as well as gene chromosome, strand and both start and end positions.
 #'
-#' The raw data contains the unfiltered count matrix for each sample, as generated directly from the CellRanger software.
-#' Swapped molecules have been removed using \code{DropletUtils::swappedDrops}.
-#' No filtering has been performed to identify cells.
-#' This may be useful if performing analyses that need to account for the ambient RNA pool.
-#'
-#' For both raw and processed data, the row metadata contains the Ensembl ID and MGI symbol for each gene.
-#'
-#' @author Aaron Lun, with modification by Jonathan Griffiths
+#' @author Mike Morgan, based on originals by Aaron Lun & Jonathan Griffiths
 #' @examples
-#' atlas.data <- EmbryoAtlasData(samples = 1)
+#' drop.data <- MouseDropletData(samples = "ZsG_1Run1")
 #'
-#' atlas.data <- EmbryoAtlasData(type="processed", samples = 1)
 #'
 #' @references
-#' Pijuan-Sala B, Griffiths JA, Guibentif C et al. (2019).
-#' A single-cell molecular map of mouse gastrulation and early organogenesis.
-#' \emph{Nature} 566, 7745:490-495.
+#' Baran-Gale J, Morgan MD, et al. (2020)
+#' Ageing compromises mouse thymus function and remodels epithelial cell differentiation
+#' \emph{eLife} 9:e56221.
 #'
 #' @export
 #' @importFrom ExperimentHub ExperimentHub
@@ -76,7 +58,6 @@ MouseDropletData <- function(samples=NULL){
     samp.names <- c("ZsG_1Run1", "ZsG_1Run2", "ZsG_2Run1", "ZsG_2Run2", "ZsG_3Run1", "ZsG_3Run2")
 
     versions <- list(base="1.0.0")
-
 
     if(any(!samples %in% samp.names)){
         warning(paste0("Incorrect samples found. Should be in list:", paste(samp.names, collapse=",")))
