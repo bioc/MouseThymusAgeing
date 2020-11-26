@@ -102,7 +102,6 @@ We are now in the position to save all of these data. We'll do this by breaking 
 day-wise objects. as this will help to increase the speed of downloading. These smaller files are what get uploaded to 
 `r Biocpkg("ExperimentHub")`.
 
-
 ```{r}
 base <- file.path("MouseThymusAgeing", "SMARTseq", "1.0.0")
 dir.create(base, recursive=TRUE, showWarnings=FALSE)

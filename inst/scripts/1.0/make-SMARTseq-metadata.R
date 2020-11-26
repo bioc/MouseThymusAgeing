@@ -18,7 +18,7 @@ info <- data.frame(
                   c(sprintf("counts-processed-day%i.rds", c(1:5)),
                     "rowdata.rds",
                     sprintf("coldata-day%i.rds", c(1:5)),
-                    sprintf("sizefactors-day%i.rds", c(1:5)),
+                    sprintf("sizefac-day%i.rds", c(1:5)),
                     sprintf("reduced-dims-day%i.rds", c(1:5)))
     )),
     BiocVersion="3.13",
