@@ -41,7 +41,7 @@
 #'
 #' @author Mike Morgan, based on originals by Aaron Lun & Jonathan Griffiths
 #' @examples
-#' drop.data <- MouseDropletData(samples = "ZsG_1Run1")
+#' drop.data <- MouseSMARTseqData(samples = "ZsG_1Run1")
 #'
 #'
 #' @references
@@ -55,8 +55,8 @@
 #' @importFrom BiocGenerics sizeFactors
 #' @importClassesFrom S4Vectors DataFrame
 #' @importFrom methods as
-MouseDropletData <- function(samples=NULL){
-    samp.names <- c("ZsG_1Run1", "ZsG_1Run2", "ZsG_2Run1", "ZsG_2Run2", "ZsG_3Run1", "ZsG_3Run2")
+MouseSMARTseqData <- function(samples=NULL){
+    samp.names <- paste0("day", c(1:5))
 
     versions <- list(base="1.0.0")
 
@@ -65,7 +65,7 @@ MouseDropletData <- function(samples=NULL){
     }
 
     if(length(intersect(samples, samp.names)) > 0){
-        MouseThymusAgeing:::.getProcOrRaw("Droplet", versions, samples)
+        MouseThymusAgeing:::.getProcOrRaw("SMARTseq", versions, samples)
     } else{
         stop(paste0("No matching samples found. Must be in list:", paste(samp.names, collapse=",")))
     }

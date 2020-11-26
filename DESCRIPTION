@@ -6,7 +6,7 @@ Authors@R: c(
     person("Mike", "Morgan", email="michael.morgan@cruk.cam.ac.uk", role=c("aut", "cre")),
     person("Jeanette", "Baran-Gale", email="Jeanette.Baran-Gale@igmm.ed.ac.uk", role="aut"))
 Description: 
-    Data access to raw and processed coutns matrices for single-cell RNA sequencing data of 
+    Data access to counts matrices for single-cell RNA sequencing data of 
     thymic epithlial cells across mouse ageing
 License: GPL-3
 Encoding: UTF-8
@@ -23,5 +23,9 @@ Imports:
 VignetteBuilder:
     knitr
 NeedsCompilation: no
+Collate:
+    'getProcOrRaw.R'
+    'MouseDropletData.R'
+    'MouseSMARTseqData.R'
 BugReports: https://github.com/MarioniLab/MouseThymusAgeing/issues
-
+RoxygenNote: 7.1.1.9000

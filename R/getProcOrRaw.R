@@ -21,6 +21,7 @@
     EXTRACTOR <- function(target, version_name) {
         ver <- .fetch_version(version, version_name)
         lapply(samples, function(i){
+            print(file.path(host, ver, sprintf("%s-%s.rds", target, i)))
             hub[hub$rdatapath==file.path(host, ver, sprintf("%s-%s.rds", target, i))][[1]]
         })
     }
