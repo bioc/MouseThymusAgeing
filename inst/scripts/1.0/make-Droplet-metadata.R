@@ -1,4 +1,4 @@
-samp.names <- c("ZsG_1Run1", "ZsG_1Run2", "ZsG_2Run1", "ZsG_2Run2", "ZsG_3Run1", "ZsG_3Run2")
+samp.names <- c("ZsG_1stRun1", "ZsG_1stRun2", "ZsG_2ndRun1", "ZsG_2ndRun2", "ZsG_3rdRun1", "ZsG_3rdRun2")
 
 info <- data.frame(
     Title = sprintf("Droplet %s",
