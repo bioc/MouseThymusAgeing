@@ -10,7 +10,7 @@ Description:
     thymic epithlial cells across mouse ageing
 License: GPL-3
 Encoding: UTF-8
-biocViews: ExperimentHub, SingleCell, FunctionalGenomics, ReproducibleResearch, ExpressionData
+biocViews: ExperimentHub, SingleCell, FunctionalGenomics, ReproducibleResearch, ExpressionData, ExperimentData
 LazyData: true
 Depends:
     SingleCellExperiment,
