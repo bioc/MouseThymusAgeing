@@ -1,7 +1,7 @@
 Package: MouseThymusAgeing
 Type: Package
 Title: Single-cell Transcriptomics Data of the Ageing Mouse Thymus
-Version: 1.0.0
+Version: 0.99.0
 Authors@R: c(
     person("Mike", "Morgan", email="michael.morgan@cruk.cam.ac.uk", role=c("aut", "cre")),
     person("Jeanette", "Baran-Gale", email="Jeanette.Baran-Gale@igmm.ed.ac.uk", role="aut"))
@@ -20,12 +20,19 @@ Imports:
     methods,
     BiocGenerics,
     S4Vectors
+Suggests:
+    knitr,
+    scuttle,
+    rmarkdown,
+    BiocStyle
 VignetteBuilder:
     knitr
 NeedsCompilation: no
 Collate:
+    'DropletMetadata.R'
     'getProcOrRaw.R'
     'MouseDropletData.R'
     'MouseSMARTseqData.R'
+    'SMARTseqMetadata.R'
 BugReports: https://github.com/MarioniLab/MouseThymusAgeing/issues
 RoxygenNote: 7.1.1.9000

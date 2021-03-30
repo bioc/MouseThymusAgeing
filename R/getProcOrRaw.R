@@ -29,11 +29,7 @@
     assays <- list(counts=do.call(cbind, count_list))
 
     coldata_list <- EXTRACTOR("coldata", "colData")
-    if(dataset %in% c("SMARTseq")){
-        sf_list <- EXTRACTOR("sizefactors", "sizefactors")
-    } else{
-        sf_list <- EXTRACTOR("sizefac", "sizefactors")
-    }
+    sf_list <- EXTRACTOR("sizefac", "sizefactors")
     reducedDims_list <- EXTRACTOR("reduced-dims", "reducedDims")
 
     # Handle data with multiple reducedDims
@@ -50,8 +46,8 @@
         rowData=rowdata
     )
     sizeFactors(sce) <- unlist(sf_list)
-    rownames(sce) <- rowData(sce)$ENSEMBL
-    colnames(sce) <- colData(sce)$cell
+    rownames(sce) <- rowData(sce)$Geneid
+    colnames(sce) <- colData(sce)$CellID
     return(sce)
 }
 

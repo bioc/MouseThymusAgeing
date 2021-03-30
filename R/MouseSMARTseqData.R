@@ -15,7 +15,7 @@
 #' data from Baran-Gale et al. (2020).
 #'
 #' The dataset contains 5 different SMART-seq2 samples, split by the day of acquisition. The available samples are:
-#' \code{1, 2, 3, 4, 5}.
+#' \code{day1, day2, day3, day4, day5}.
 #'
 #' In the data, poor-quality cells have already been removed based on insufficient sequencing depth, high mitochondrial
 #' content, excessive proportion of expression from ERCC spike-in and ribosomal genes. Exact details can be found in the
@@ -31,20 +31,20 @@
 #' \item{\code{PlateID}:}{Character, A unique ID for the 384-well plate into which each cell was index-sorted.}
 #' \item{\code{Column}:}{Integer, A value from 1-24 corresponding to the plate column.}
 #' \item{\code{Row}:}{Character, A value from A-P corresponding to the plate row.}
-#' \item{\code{Age}:}{Character, Age of mouse at the time of doxycycline treatment. Age at time of data acquisition is +4weeks.}
 #' \item{\code{SortType}:}{Character, Flow cytometry sorting group, mTEClo, mTEChi, gmTEC or cTEC.}
 #' \item{\code{SortDay}:}{Integer, Day on which cells were sorted - corresponds to the sample IDs for downloading data and replicate.}
 #' \item{\code{Age}:}{Character, Mouse age at the time of data acquisition.}
 #' \item{\code{SubType}:}{Character, Annotation assigned to clusters.}
+#' \item{\code{SizeFactor}:}{Numeric, Estimated normalized factor across all cells and experimental samples.}
 #' }
 #' Reduced dimension representations of the data are also available in the \code{reducedDims} slot of the SingleCellExperiment object.
 #' The \code{SingleCellExperiment} object has row metadata that contains the Ensembl ID \code{ensembl_gene_id} and Gene
 #' symbols \code{external_gene_name} for each gene, as well as gene chromosome, strand and both start and end positions.
 #'
-#' @author Mike Morgan, based on originals by Aaron Lun & Jonathan Griffiths
+#' @author Mike Morgan, based on original code by Aaron Lun & Jonathan Griffiths
 #' @examples
-#' drop.data <- MouseSMARTseqData(samples = "day1")
-#'
+#' smart.data <- MouseSMARTseqData(samples = "day1")
+#' smart.data
 #'
 #' @references
 #' Baran-Gale J, Morgan MD, et al. (2020)

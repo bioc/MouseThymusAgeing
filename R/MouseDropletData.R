@@ -15,7 +15,7 @@
 #' data from Baran-Gale et al. (2020).
 #'
 #' The dataset contains 6 10X Genomics samples. The available samples are:
-#' \code{ZsG_1Run1, ZsG_1Run2, ZsG_2Run1, ZsG_2Run2, ZsG_3Run1, ZsG_3Run2}.
+#' \code{ZsG_1stRun1, ZsG_1stRun2, ZsG_2ndRun1, ZsG_2ndRun2, ZsG_3rdRun1, ZsG_3rdRun2}.
 #'
 #'
 #' In the data, cell-containing libraries have already been identified in each sample
@@ -38,10 +38,10 @@
 #' The \code{SingleCellExperiment} object has row metadata that contains the Ensembl ID \code{ensembl_gene_id} and Gene
 #' symbols \code{external_gene_name} for each gene, as well as gene chromosome, strand and both start and end positions.
 #'
-#' @author Mike Morgan, based on originals by Aaron Lun & Jonathan Griffiths
+#' @author Mike Morgan, based on original code by Aaron Lun & Jonathan Griffiths
 #' @examples
-#' drop.data <- MouseDropletData(samples = "ZsG_1Run1")
-#'
+#' drop.data <- MouseDropletData(samples = "ZsG_1stRun1")
+#' drop.data
 #'
 #' @references
 #' Baran-Gale J, Morgan MD, et al. (2020)
