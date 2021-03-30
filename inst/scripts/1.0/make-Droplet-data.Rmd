@@ -175,6 +175,7 @@ dir.create(base, recursive=TRUE, showWarnings=FALSE)
 saveRDS(rowData(thymus.sce), file=paste0(base, "/rowdata.rds"))
 for(samp in unique(thymus.sce$SampID)){
     sub <- thymus.sce[, thymus.sce$SampID == samp]
+    rownames(sub) <- rownames(thymus.sce)
     saveRDS(counts(sub), 
         file=paste0(base, "/counts-processed-ZsG_", samp, ".rds"))
     saveRDS(colData(sub), 

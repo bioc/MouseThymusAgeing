@@ -39,7 +39,7 @@ such as the chromosome, start and end position and gene length.
 
 ```{r}
 genes.path <- bfcrpath(bfc, file.path("https://content.cruk.cam.ac.uk/",
-    "jmlab/thymus_data/Gene_info.tsv"))
+                                      "jmlab/thymus_data/Gene_info.tsv"))
 ```
 
 Both of these data can be loaded in using the standard `read.table` functions.
