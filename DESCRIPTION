@@ -6,8 +6,8 @@ Authors@R: c(
     person("Mike", "Morgan", email="michael.morgan@cruk.cam.ac.uk", role=c("aut", "cre")),
     person("Jeanette", "Baran-Gale", email="Jeanette.Baran-Gale@igmm.ed.ac.uk", role="aut"))
 Description: 
-    Data access to counts matrices and meta-data for single-cell RNA sequencing data of 
-    thymic epithlial cells across mouse ageing
+    This package provides data access to counts matrices and meta-data for single-cell RNA sequencing data of 
+    thymic epithlial cells across mouse ageing using SMARTseq2 and 10X Genommics chemistries.
 License: GPL-3
 Encoding: UTF-8
 biocViews: ExperimentHub, SingleCellData, ExpressionData, ExperimentData

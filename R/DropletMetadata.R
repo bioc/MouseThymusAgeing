@@ -1,4 +1,5 @@
-#' Sample metadata from the Baran-Gale et al. ageing mouse thymus droplet experiments
+#' @title
+#'  Sample metadata from the Baran-Gale et al. ageing mouse thymus droplet experiments
 #'
 #' A data frame containing mouse age and sort-type information for the
 #' droplet single-cell RNA-sequencing experiment data sets
@@ -20,6 +21,9 @@
 #' Ageing compromises mouse thymus function and remodels epithelial cell differentiation
 #' \emph{eLife} 9:e56221.
 #'
+#' @author Mike Morgan
+#' @name DropletMetadata
+#' @rdname DropletMetadata
 #' @export
 DropletMetadata <- read.table(
     text =
