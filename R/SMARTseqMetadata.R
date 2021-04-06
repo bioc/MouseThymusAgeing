@@ -20,6 +20,9 @@
 #' Ageing compromises mouse thymus function and remodels epithelial cell differentiation
 #' \emph{eLife} 9:e56221.
 #'
+#' @author Mike Morgan
+#' @name SMARTseqMetadata
+#' @rdname SMARTseqMetadata
 #' @export
 SMARTseqMetadata <- read.table(
     text =

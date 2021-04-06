@@ -48,6 +48,9 @@
 #' Ageing compromises mouse thymus function and remodels epithelial cell differentiation
 #' \emph{eLife} 9:e56221.
 #'
+#' @author Mike Morgan
+#' @name MouseDropletData
+#' @rdname MouseDropletData
 #' @export
 #' @importFrom ExperimentHub ExperimentHub
 #' @importFrom SingleCellExperiment SingleCellExperiment

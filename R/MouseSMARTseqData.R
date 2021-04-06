@@ -50,6 +50,9 @@
 #' Baran-Gale J, Morgan MD, et al. (2020)
 #' Ageing compromises mouse thymus function and remodels epithelial cell differentiation
 #' \emph{eLife} 9:e56221.
+#' @author Mike Morgan
+#' @name MouseSMARTseqData
+#' @rdname MouseSMARTseqData
 #'
 #' @export
 #' @importFrom ExperimentHub ExperimentHub
