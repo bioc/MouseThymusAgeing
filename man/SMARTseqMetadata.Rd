@@ -28,8 +28,8 @@ head(SMARTseqMetadata)
 }
 \references{
 Baran-Gale J, Morgan MD, et al. (2020)
-Ageing compromises mouse thymus function and remodels epithelial cell differentiation
-\emph{eLife} 9:e56221.
+Ageing compromises mouse thymus function and remodels epithelial cell
+differentiation \emph{eLife} 9:e56221.
 }
 \author{
 Mike Morgan
