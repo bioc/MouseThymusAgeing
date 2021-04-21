@@ -58,7 +58,8 @@
 #' @importClassesFrom S4Vectors DataFrame
 #' @importFrom methods as
 MouseDropletData <- function(samples=NULL){
-    samp.names <- c("ZsG_1stRun1", "ZsG_1stRun2", "ZsG_2ndRun1", "ZsG_2ndRun2", "ZsG_3rdRun1", "ZsG_3rdRun2")
+    samp.names <- c("ZsG_1stRun1", "ZsG_1stRun2", "ZsG_2ndRun1",
+                    "ZsG_2ndRun2", "ZsG_3rdRun1", "ZsG_3rdRun2")
     if(is.null(samples)){
         samples <- samp.names
     }
@@ -66,12 +67,14 @@ MouseDropletData <- function(samples=NULL){
     versions <- list(base="1.0.0")
 
     if(any(!samples %in% samp.names)){
-        warning(paste0("Incorrect samples found. Should be in list:", paste(samp.names, collapse=",")))
+        warning(paste0("Incorrect samples found. Should be in list:",
+                       paste(samp.names, collapse=",")))
     }
 
     if(length(intersect(samples, samp.names)) > 0){
         MouseThymusAgeing:::.getProcOrRaw("Droplet", versions, samples)
     } else{
-        stop(paste0("No matching samples found. Must be in list:", paste(samp.names, collapse=",")))
+        stop(paste0("No matching samples found. Must be in list:",
+                    paste(samp.names, collapse=",")))
     }
 }

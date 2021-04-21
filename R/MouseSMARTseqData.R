@@ -69,12 +69,14 @@ MouseSMARTseqData <- function(samples=NULL){
     versions <- list(base="1.0.0")
 
     if(!is.null(samples) & any(!samples %in% samp.names)){
-        warning(paste0("Incorrect samples found. Should be in list:", paste(samp.names, collapse=",")))
+        warning(paste0("Incorrect samples found. Should be in list:",
+                       paste(samp.names, collapse=",")))
     }
 
     if(length(intersect(samples, samp.names)) > 0){
         MouseThymusAgeing:::.getProcOrRaw("SMARTseq", versions, samples)
     } else{
-        stop(paste0("No matching samples found. Must be in list:", paste(samp.names, collapse=",")))
+        stop(paste0("No matching samples found. Must be in list:",
+                    paste(samp.names, collapse=",")))
     }
 }

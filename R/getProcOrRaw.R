@@ -8,7 +8,6 @@
 #' @importFrom SummarizedExperiment rowData
 #' @importFrom SummarizedExperiment colData
 #'
-#' @export
 .getProcOrRaw <- function(dataset, version, samples){
     hub <- ExperimentHub()
     host <- file.path("MouseThymusAgeing", dataset)
@@ -21,7 +20,8 @@
     EXTRACTOR <- function(target, version_name) {
         ver <- .fetch_version(version, version_name)
         lapply(samples, function(i){
-            hub[hub$rdatapath==file.path(host, ver, sprintf("%s-%s.rds", target, i))][[1]]
+            hub[hub$rdatapath==file.path(host, ver,
+                                         sprintf("%s-%s.rds", target, i))][[1]]
         })
     }
 
