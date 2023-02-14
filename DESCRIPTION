@@ -1,9 +1,9 @@
 Package: MouseThymusAgeing
 Type: Package
 Title: Single-cell Transcriptomics Data of the Ageing Mouse Thymus
-Version: 0.99.5
+Version: 0.99.6
 Authors@R: c(
-    person("Mike", "Morgan", email="michael.morgan@cruk.cam.ac.uk", role=c("aut", "cre")),
+    person("Mike", "Morgan", email="michael.morgan@abdn.ac.uk", role=c("aut", "cre")),
     person("Jeanette", "Baran-Gale", email="Jeanette.Baran-Gale@igmm.ed.ac.uk", role="aut"))
 Description: 
     This package provides data access to counts matrices and meta-data for single-cell RNA sequencing data of 
