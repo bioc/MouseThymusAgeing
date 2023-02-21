@@ -58,7 +58,21 @@
 #sizefactors,rowData,colData,reducedDims}
 #spliced represents version for all spliced count measurements
 .fetch_version <- function(version, field) {
-    opt <- version[[field]]
+    # change in behaviour - selecting an empty field used to return NULL
+    # now returns an error
+    opt <- tryCatch({
+        version[[field]]
+        }, warning=function(warn){
+            warning(warn)
+            version[[field]]
+            }, 
+        error=function(err){
+            message("field not found in version - adding")
+            NULL
+            }, finally={
+                
+            })
+
     if (is.null(opt)) {
         version[[1]]
     } else {
